@@ -2,7 +2,7 @@ import { auth, currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { getEventsByTier } from "@/lib/events";
 import { UserTier } from "@/lib/supabase";
-import Image from "next/image";
+import EventCard from "../components/EventCards";
 
 export default async function EventsPage() {
   const { userId } = await auth();
@@ -32,54 +32,25 @@ export default async function EventsPage() {
               <span className="capitalize font-semibold">{tier}</span>
             </p>
           </div>
-       
-         
+            {tier !== "platinum" && (<div>
+                <a
+                href="/upgrade"
+                className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
+                >
+                Upgrade Tier
+                </a>
+
+            </div>)}
         </div>
 
-        {/* Events */}
+  
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {events.map((event) => (
-            <div
-              key={event.id}
-              className="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-all"
-            >
-              <div className="h-48 w-full relative bg-gray-200">
-                {event.image_url && (
-                  <Image
-                    src={event.image_url}
-                    alt={event.title}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  />
-                )}
-              </div>
-              <div className="p-5">
-                <h3 className="text-xl font-semibold text-gray-900">{event.title}</h3>
-                <p className="text-sm text-gray-500 mt-1">
-                  {new Date(event.event_date).toLocaleDateString()}
-                </p>
-                <p className="text-gray-700 mt-3 text-sm">{event.description}</p>
-
-                <span
-                  className={`inline-block mt-4 px-3 py-1 text-xs font-semibold rounded-full ${tierStyles[event.tier].bg} ${tierStyles[event.tier].text}`}
-                >
-                  {event.tier}
-                </span>
-
-                <button
-  onClick={() => alert(`🎟️ You’ve registered for: "${event.title}"`)}
-  className="mt-4 w-full bg-blue-600 text-white py-2 px-4 rounded-md font-medium hover:bg-blue-700 transition"
->
-  Register Now
-</button>
-
-              </div>
-            </div>
+            <EventCard key={event.id} event={event} tierStyles={tierStyles} />
           ))}
         </div>
 
-        {/* Upgrade CTA */}
+      
         {tier !== "platinum" && (
           <div className="mt-16 bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl p-8 text-white shadow-xl text-center">
             <h2 className="text-2xl font-bold">Upgrade Your Tier</h2>

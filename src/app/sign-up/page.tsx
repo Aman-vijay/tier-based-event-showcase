@@ -14,6 +14,7 @@ export default function SignUpPage() {
         </div>
         <div className="mt-8">
           <SignUp 
+            routing="hash"
             appearance={{
               elements: {
                 rootBox: "w-full",

@@ -1,6 +1,7 @@
 'use client'
 import { useUser } from '@clerk/nextjs'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { 
     CreditCard as CreditCardIcon, 
     Sparkles as SparklesIcon, 
@@ -17,8 +18,23 @@ const tiers = [
 
 export default function UpgradePage() {
     const { user } = useUser()
+    const router = useRouter()
     const [message, setMessage] = useState("")
     const [activeTier, setActiveTier] = useState("")
+    const [countdown, setCountdown] = useState<number | null>(null)
+
+    useEffect(() => {
+        if (countdown !== null) {
+            if (countdown > 0) {
+                const timer = setTimeout(() => {
+                    setCountdown(countdown - 1)
+                }, 1000)
+                return () => clearTimeout(timer)
+            } else {
+                router.push('/events')
+            }
+        }
+    }, [countdown, router])
 
     const upgradeTier = async (tier: string) => {
         if (!user) return
@@ -30,7 +46,8 @@ export default function UpgradePage() {
         })
 
         setActiveTier(tier)
-        setMessage(`Tier updated to "${tier}". Go to /events and refresh to see changes.`)
+        setMessage(`Tier updated to "${tier}". Redirecting to events in 3 seconds...`)
+        setCountdown(3)
     }
 
     return (
@@ -68,7 +85,10 @@ export default function UpgradePage() {
             
             {message && (
                 <div className="mt-8 p-4 rounded-md bg-green-50 border border-green-200">
-                    <p className="text-green-700 font-medium text-center">{message}</p>
+                    <p className="text-green-700 font-medium text-center">
+                        {message}
+                        {countdown !== null && <span> ({countdown})</span>}
+                    </p>
                 </div>
             )}
         </div>
