@@ -22,9 +22,10 @@ export default async function EventsPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 py-10 px-4">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-7xl mx-auto space-y-10">
+        
         {/* Header */}
-        <div className="flex justify-between items-center mb-8">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div>
             <h1 className="text-4xl font-bold text-gray-900">Tier-Based Events</h1>
             <p className="text-gray-600 mt-1">
@@ -32,30 +33,30 @@ export default async function EventsPage() {
               <span className="capitalize font-semibold">{tier}</span>
             </p>
           </div>
-            {tier !== "platinum" && (<div>
-                <a
-                href="/upgrade"
-                className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
-                >
-                Upgrade Tier
-                </a>
 
-            </div>)}
+          {tier !== "platinum" && (
+            <a
+              href="/upgrade"
+              className="inline-block bg-blue-600 text-white text-sm px-5 py-2.5 rounded-md hover:bg-blue-700 transition shadow-sm"
+            >
+              Upgrade Tier
+            </a>
+          )}
         </div>
 
-  
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Events Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {events.map((event) => (
             <EventCard key={event.id} event={event} tierStyles={tierStyles} />
           ))}
         </div>
 
-      
+        {/* CTA Upgrade Banner */}
         {tier !== "platinum" && (
-          <div className="mt-16 bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl p-8 text-white shadow-xl text-center">
+          <div className="mt-12 bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl p-8 text-white shadow-lg text-center">
             <h2 className="text-2xl font-bold">Upgrade Your Tier</h2>
             <p className="mt-2 text-sm">
-              Unlock even more exclusive events by upgrading your membership.
+              Unlock more exclusive events by upgrading your membership.
             </p>
             <a
               href="/upgrade"

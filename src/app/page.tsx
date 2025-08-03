@@ -1,28 +1,28 @@
-import Link from 'next/link'
-import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
+import Link from 'next/link';
+import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 
 export default function Home() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
-      <div className="max-w-xl w-full text-center space-y-6">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-teal-400 via-coral-300 to-violet-500 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-3xl w-full text-center space-y-10 bg-white/95 backdrop-blur-xl rounded-2xl p-8 sm:p-12 shadow-xl">
         <SignedOut>
-          <div className="space-y-4">
-            <h1 className="text-4xl font-extrabold text-gray-800">
-              Welcome to Tier-Based Event Showcase 🎉
+          <div className="space-y-8">
+            <h1 className="text-5xl sm:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-violet-600 leading-tight animate-fade-in">
+              🎟️ Tier-Based <br /> Event Showcase
             </h1>
-            <p className="text-gray-600 text-lg">
-              Sign up or log in to view exclusive events based on your membership tier.
+            <p className="text-gray-900 text-lg sm:text-xl font-medium max-w-xl mx-auto">
+              Discover exclusive events tailored to your membership tier. Sign in to unlock a world of experiences.
             </p>
-            <div className="flex justify-center gap-4">
+            <div className="flex justify-center flex-wrap gap-4 pt-4">
               <Link
                 href="/sign-in"
-                className="bg-blue-600 text-white px-6 py-2 rounded-md text-sm font-semibold hover:bg-blue-700 transition"
+                className="bg-gradient-to-r from-teal-500 to-violet-500 text-white px-8 py-3 rounded-lg text-lg font-semibold shadow-lg hover:from-teal-600 hover:to-violet-600 transition-all duration-300 transform hover:scale-105"
               >
                 Sign In
               </Link>
               <Link
                 href="/sign-up"
-                className="border border-blue-600 text-blue-600 px-6 py-2 rounded-md text-sm font-semibold hover:bg-blue-50 transition"
+                className="border-2 border-teal-500 text-teal-600 px-8 py-3 rounded-lg text-lg font-semibold shadow-sm hover:bg-teal-50 hover:border-teal-600 transition-all duration-300 transform hover:scale-105"
               >
                 Sign Up
               </Link>
@@ -31,27 +31,33 @@ export default function Home() {
         </SignedOut>
 
         <SignedIn>
-          <div className="space-y-4">
-            <h1 className="text-3xl font-bold text-gray-800">Welcome back 👋</h1>
-            <p className="text-gray-600">You&apos;re logged in. Ready to explore events?</p>
-            <div className="flex justify-center gap-4">
+          <div className="space-y-8">
+            <h1 className="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-violet-600 animate-fade-in">
+              Welcome Back 👋
+            </h1>
+            <p className="text-gray-900 text-lg sm:text-xl font-medium max-w-xl mx-auto">
+              Explore exclusive tier-based events and elevate your membership for more!
+            </p>
+            <div className="flex justify-center flex-wrap gap-4 pt-4">
               <Link
                 href="/events"
-                className="bg-blue-600 text-white px-6 py-2 rounded-md text-sm font-semibold hover:bg-blue-700 transition"
+                className="bg-gradient-to-r from-teal-500 to-violet-500 text-white px-8 py-3 rounded-lg text-lg font-semibold shadow-lg hover:from-teal-600 hover:to-violet-600 transition-all duration-300 transform hover:scale-105"
               >
                 View Events
               </Link>
               <Link
                 href="/upgrade"
-                className="bg-gray-100 text-gray-800 px-6 py-2 rounded-md text-sm font-semibold hover:bg-gray-200 transition"
+                className="bg-white text-teal-600 border-2 border-teal-500 px-8 py-3 rounded-lg text-lg font-semibold shadow-sm hover:bg-teal-50 hover:border-teal-600 transition-all duration-300 transform hover:scale-105"
               >
                 Upgrade Tier
               </Link>
-              <UserButton />
+              <div className="pt-1">
+                <UserButton afterSignOutUrl="/" />
+              </div>
             </div>
           </div>
         </SignedIn>
       </div>
     </div>
-  )
+  );
 }
